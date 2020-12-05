@@ -1,0 +1,31 @@
+name: ENVNAME
+
+channels:
+    - anaconda
+    # - bioconda
+    - conda-forge
+    - pytorch
+
+dependencies:
+    - awscli
+    - boto3
+    # - flair
+    # - h5py
+    # - librosa
+    - matplotlib
+    - numpy
+    # - onnx
+    - pandas
+    - pathlib
+    - pycocotools
+    - python=3.6
+    - pytorch
+    # - pyyaml
+    - scikit-learn
+    # - spacy
+    - scipy
+    # - tensorflow
+    # - tensorflow-gpu
+    - torch
+    - torchvision
+    - tqdm

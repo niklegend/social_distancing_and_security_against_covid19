@@ -1,0 +1,509 @@
+[
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000102.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      85,
+      167,
+      694,
+      776
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000409.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      339,
+      176,
+      773,
+      610
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000426.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      745,
+      56,
+      961,
+      244
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000558.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      395,
+      487,
+      892,
+      984
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000737.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      836,
+      75,
+      1004,
+      247
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000749.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      815,
+      115,
+      982,
+      183
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000849.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      837,
+      76,
+      968,
+      136
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00000900.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      139,
+      602,
+      214,
+      710
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001127.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      576,
+      49,
+      971,
+      233
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001278.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      1048,
+      195,
+      1112,
+      244
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001586.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      115,
+      463,
+      334,
+      602
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001607.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      898,
+      220,
+      1131,
+      400
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001626.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      71,
+      77,
+      632,
+      640
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00001626.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      526,
+      19,
+      1044,
+      540
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002134.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      518,
+      603,
+      655,
+      717
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002300.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      77,
+      454,
+      203,
+      640
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002320.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      249,
+      60,
+      742,
+      553
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002321.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      188,
+      283,
+      576,
+      671
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002350.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      300,
+      255,
+      707,
+      662
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002464.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      377,
+      415,
+      545,
+      548
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002479.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      1044,
+      155,
+      1199,
+      263
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002522.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      212,
+      250,
+      529,
+      567
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002522.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      518,
+      465,
+      891,
+      838
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002576.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      889,
+      135,
+      985,
+      217
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00002625.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      164,
+      855,
+      276,
+      946
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003030.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      592,
+      387,
+      815,
+      557
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003055.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      956,
+      224,
+      1026,
+      281
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003167.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      1268,
+      91,
+      1450,
+      207
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003548.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      401,
+      108,
+      934,
+      641
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003549.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      230,
+      343,
+      839,
+      952
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003649.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      876,
+      118,
+      981,
+      215
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003672.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      399,
+      402,
+      691,
+      552
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00003774.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      188,
+      464,
+      312,
+      586
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00004007.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      680,
+      264,
+      961,
+      445
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00004179.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      686,
+      146,
+      970,
+      240
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00004277.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      864,
+      143,
+      981,
+      269
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00004336.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      294,
+      199,
+      691,
+      596
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\MAFA\\test-images/images\\test_00004385.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      434,
+      280,
+      788,
+      634
+    ]
+  },
+  {
+    "image_path": "C:\\Users\\matti\\Downloads\\Datasets\\WiderFace\\WIDER_val/images\\37--Soccer\\37_Soccer_soccer_ball_37_281.jpg",
+    "size": {
+      "width": 960,
+      "height": 544
+    },
+    "bbox": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{
+    "name": "master-thesis",
+    "version": "1.0.0",
+    "description": "Repository for my master thesis.",
+    "dependencies": {},
+    "devDependencies": {
+        "prettier": "2.1.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://bitbucket.org/mvandi/masterthesis"
+    },
+    "author": "Mattia Vandi"
+}
