@@ -5,8 +5,6 @@ from PIL import ImageColor
 from bbox_visualizer import bbox_visualizer as bbv
 from colormap import hex2rgb
 
-from . import find_largest_divisor
-
 __colormap = None
 
 supported_color_modes = [
@@ -48,10 +46,13 @@ def draw_detections_on_image_array(
         colors=None,
         use_normalized_coordinates=False,
         max_boxes_to_draw=None,
-        min_score_threshold=0.5,
+        min_score_threshold=None,
         line_thickness=3,
         color_mode='bgr'
 ):
+    if boxes.shape[0] == 0:
+        return
+
     color_mode = color_mode.lower()
     assert all([
         color_mode in ['rgb', 'bgr'],
@@ -90,11 +91,14 @@ def draw_detections_on_image_array(
 
     drawn_boxes = 0
 
+    check_score = min_score_threshold is not None and scores is not None
+    check_max_boxes_to_draw = max_boxes_to_draw is not None
+
     for idx in range(boxes.shape[0]):
-        if scores is not None and scores[idx] < min_score_threshold:
+        if check_score and scores[idx] < min_score_threshold:
             continue
 
-        if max_boxes_to_draw is not None and drawn_boxes >= max_boxes_to_draw:
+        if check_max_boxes_to_draw and drawn_boxes >= max_boxes_to_draw:
             break
 
         # Get class index
@@ -122,7 +126,7 @@ def draw_detections_on_image_array(
 
         # Process score
         if scores is not None:
-            score = f'{round(scores[idx] * 100, ndigits=2)}%'
+            score = f'{scores[idx] * 100:.2f}%'
             if label:
                 label += ' ' + score
             else:
