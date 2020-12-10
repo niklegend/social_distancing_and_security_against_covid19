@@ -67,7 +67,7 @@ def bbox_rotate(bbox, theta, size):
     s = math.sin(theta)
 
     # Image centroid
-    cx, cy = size[0] / 2, size[1] / 2
+    cx, cy = [x / 2 for x in size]
 
     def rotate_point(x, y):
         a = x - cx

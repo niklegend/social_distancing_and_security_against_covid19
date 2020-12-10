@@ -1,9 +1,11 @@
-### Personal files ###
+### Project-specific files ###
 .*.bak
 *.bak
 .*.bak/
 *.bak/
 data/
+
+!/masterthesis/**/*.py
 
 ### LaTeX ###
 ## Core latex/pdflatex auxiliary files:

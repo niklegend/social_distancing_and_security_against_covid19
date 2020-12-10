@@ -5,12 +5,13 @@ from argparse import Namespace
 from kaggle.api import KaggleApi
 
 import gdown
+from masterthesis.data import download_file
 from masterthesis.utils import TimeIt
 from torchvision.datasets.utils import download_url, extract_archive
 
 
 def gdrive_url(file_id):
-    return f'https://drive.google.com/uc?id={file_id}'
+    return 'https://drive.google.com/uc?id=%s' % file_id
 
 
 kaggle = Namespace(
@@ -103,37 +104,23 @@ def download_kaggle(root, download_root, remove_finished=False):
 
 
 def download_files(files, root, download_root, create_extract_dir=False, remove_finished=False):
-    if not os.path.exists(root):
-        os.makedirs(root)
-
-    if not os.path.exists(download_root):
-        os.makedirs(download_root)
+    os.makedirs(root, exist_ok=True)
+    os.makedirs(download_root, exist_ok=True)
 
     for file in files:
-        url = file.url
         from_path = os.path.join(download_root, file.name)
         if create_extract_dir:
             to_path = os.path.join(root, os.path.splitext(file.name)[0])
         else:
             to_path = root
-        download_type = file.download_type
 
-        with TimeIt('Download complete.'):
-            if download_type == 'gdrive':
-                gdown.download(url, from_path, quiet=False)
-            elif download_type == 'url':
-                dirnaname, basename = os.path.split(from_path)
-                download_url(url, root=dirnaname, filename=basename)
-            else:
-                raise ValueError(f'Invalid \'download_type\': {download_type}')
-
-        with TimeIt('Extraction complete.'):
-            print(f'Extracting {from_path} to {to_path}')
-            extract_archive(
-                from_path=from_path,
-                to_path=to_path,
-                remove_finished=remove_finished
-            )
+        download_file(
+            file.url,
+            file.download_type,
+            from_path=from_path,
+            to_path=to_path,
+            remove_finished=remove_finished
+        )
 
 
 def download_data(root, download_root=None, remove_finished=False):
@@ -179,7 +166,7 @@ def main(args):
     download_data(
         root=args.root,
         download_root=args.download_root,
-        remove_finished=args.archives_root
+        remove_finished=args.remove_finished
     )
 
 

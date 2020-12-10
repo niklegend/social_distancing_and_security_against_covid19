@@ -30,7 +30,7 @@ class BoxMode(IntEnum):
     bounding box top-left corner, and w and h are the width and height of the bounding box.
     """
 
-    def _generate_next_value_(self, _start, count, _last_values):
+    def _generate_next_value_(self, start, count, last_values):
         """Generate consecutive automatic numbers starting from zero."""
         return count
 

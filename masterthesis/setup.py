@@ -26,6 +26,7 @@ setup(
         'opencv-python',
         'bbox-visualizer',
         'colormap',
-        'easydev'
+        'easydev',
+        'gdown'
     ]
 )
