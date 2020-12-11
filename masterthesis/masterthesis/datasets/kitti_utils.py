@@ -178,7 +178,7 @@ class ToKittiBaseConverter(ABC):
                             bbox = bbox.resize(img_size, self.kitti_image_size)
 
                         # Append KITTI annotation
-                        annotations.append(kitti.create_annotation(class_name, bbox=bbox))
+                        annotations.append(create_annotation(class_name, bbox=bbox))
                     else:
                         w, h = img_size
                         self.log(image_path, w, h, bbox.data)

@@ -32,7 +32,7 @@ class ToKittiConverter(ToKittiBaseConverter):
 
     def log(self, image_path, w, h, bbox):
         from . import log
-        log(image_path, w, h, bbox.data)
+        log(image_path, w, h, bbox)
 
     @property
     def mask_limit(self):

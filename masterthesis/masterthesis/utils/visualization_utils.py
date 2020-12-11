@@ -51,7 +51,7 @@ def draw_detections_on_image_array(
         color_mode='bgr'
 ):
     if boxes.shape[0] == 0:
-        return
+        return img
 
     color_mode = color_mode.lower()
     assert all([

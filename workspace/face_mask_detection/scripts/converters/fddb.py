@@ -2,6 +2,7 @@ import math
 import os
 import re
 
+from masterthesis.detection.utils import ellipse_to_bbox, Point
 from .tokitticonverter import ToKittiConverter, Category
 
 
@@ -46,14 +47,24 @@ class FddbToKittiConverter(ToKittiConverter):
                     class_names = []
                     for j in range(1, num_faces + 1):
                         faces = str(lines[i + j + 1]).split()
-                        left, top, width, height = self.ellipse2bbox(face_annotations=faces[0:5])
-                        bboxes.append([left, top, width + left, top + height])
+
+                        face_annotations = faces[:5]
+
+                        major_axis_radius = float(face_annotations[0])
+                        minor_axis_radius = float(face_annotations[1])
+                        angle = float(face_annotations[2])
+                        cx = float(face_annotations[3])
+                        cy = float(face_annotations[4])
+
+                        bbox = ellipse_to_bbox(Point(cx, cy), Point(major_axis_radius, minor_axis_radius), angle)
+                        bboxes.append(bbox)
                         class_names.append(category_name)
                     if bboxes:
                         self.write_example(
                             image_path=os.path.join(self.base_dir, image_name),
                             class_names=class_names,
-                            bboxes=bboxes)
+                            bboxes=bboxes
+                        )
         return self.count_mask, self.count_no_mask
 
     @staticmethod
@@ -64,17 +75,17 @@ class FddbToKittiConverter(ToKittiConverter):
         center_x = int(float(face_annotations[3]))
         center_y = int(float(face_annotations[4]))
 
-        cosin = math.cos(math.radians(-angle))
-        sin = math.sin(math.radians(-angle))
+        cosa = math.cos(math.radians(-angle))
+        sina = math.sin(math.radians(-angle))
 
-        x1 = cosin * -minor_axis_radius - sin * -major_axis_radius + center_x
-        y1 = sin * -minor_axis_radius + cosin * -major_axis_radius + center_y
-        x2 = cosin * minor_axis_radius - sin * -major_axis_radius + center_x
-        y2 = sin * minor_axis_radius + cosin * -major_axis_radius + center_y
-        x3 = cosin * minor_axis_radius - sin * major_axis_radius + center_x
-        y3 = sin * minor_axis_radius + cosin * major_axis_radius + center_y
-        x4 = cosin * -minor_axis_radius - sin * major_axis_radius + center_x
-        y4 = sin * -minor_axis_radius + cosin * major_axis_radius + center_y
+        x1 = cosa * -minor_axis_radius - sina * -major_axis_radius + center_x
+        y1 = sina * -minor_axis_radius + cosa * -major_axis_radius + center_y
+        x2 = cosa * minor_axis_radius - sina * -major_axis_radius + center_x
+        y2 = sina * minor_axis_radius + cosa * -major_axis_radius + center_y
+        x3 = cosa * minor_axis_radius - sina * major_axis_radius + center_x
+        y3 = sina * minor_axis_radius + cosa * major_axis_radius + center_y
+        x4 = cosa * -minor_axis_radius - sina * major_axis_radius + center_x
+        y4 = sina * -minor_axis_radius + cosa * major_axis_radius + center_y
 
         '''pts = cv.ellipse2Poly((center_x, center_y), (major_axis_radius, minor_axis_radius), angle, 0, 360, 10)
         rect = cv.boundingRect(pts)'''

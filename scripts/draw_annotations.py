@@ -2,9 +2,10 @@ import argparse
 import os
 
 import cv2
+import numpy as np
 from masterthesis.datasets import kitti_utils as kitti
-from masterthesis.detection import utils
 from masterthesis.detection.boundingbox import BoxMode
+from masterthesis.utils.visualization_utils import draw_detections_on_image_array
 from matplotlib import pyplot as plt
 
 
@@ -15,23 +16,23 @@ def draw_annotations(image_path, label_path, output_path=None):
 
     annotations = kitti.read_annotation_file(label_path)
     for annotation in annotations:
-        boxes.append(annotation['bbox'].to(BoxMode.XYXY))
+        boxes.append(annotation['bbox'])
 
-    out_img = img.copy()
-
-    utils.draw_detections_on_image_array(
+    draw_detections_on_image_array(
         img,
-        boxes
+        np.array(boxes)
     )
 
-    plt.imshow(out_img[::-1])
+    img = img[:, :, ::-1]
+
+    plt.imshow(img)
     plt.show()
 
     if os.output_path and image_path != output_path:
         basedir = os.path.dirname(output_path)
         os.makedirs(basedir, exist_ok=True)
 
-        cv2.imwrite(output_path, out_img)
+        cv2.imwrite(output_path, img)
 
 
 def main(args):

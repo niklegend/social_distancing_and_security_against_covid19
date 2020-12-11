@@ -57,14 +57,14 @@ def data_to_kitti(
         train = action == 'train'
 
         category_limit_dict = {
-            Category.PERSON: category_limit,
+            Category.MASK: category_limit,
             Category.NO_MASK: category_limit
         }
 
         def update_statistics(label=None):
             nonlocal category_limit_dict
 
-            category_limit_dict[Category.PERSON] -= count_masks
+            category_limit_dict[Category.MASK] -= count_masks
             category_limit_dict[Category.NO_MASK] -= count_no_masks
 
             print_summary({k: category_limit - v for k, v in category_limit_dict.items()}, label=label)
@@ -220,6 +220,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
+    parser.add_argument('--kitti-base-dir', help='path to save converted data set', type=str, required=True)
     parser.add_argument('--kaggle-base-dir', help='path to kaggle dataset train and validation images', type=str,
                         default=None)
     parser.add_argument('--mafa-base-dir', help='path to MAFA dataset train and validation images', type=str,
@@ -228,7 +229,6 @@ if __name__ == '__main__':
                         default=None)
     parser.add_argument('--widerface-base-dir', help='path to widerface dataset train and validation images', type=str,
                         default=None)
-    parser.add_argument('--kitti-base-dir', help='path to save converted data set', type=str, required=True)
     parser.add_argument('--category-limit', default=sys.maxsize, help='data limit for TLT', type=int)
     parser.add_argument('--kitti-image-size', nargs=2, default=DEFAULT_KITTI_IMAGE_SIZE, help='TLT input dimensions',
                         type=int)
