@@ -66,39 +66,3 @@ class FddbToKittiConverter(ToKittiConverter):
                             bboxes=bboxes
                         )
         return self.count_mask, self.count_no_mask
-
-    @staticmethod
-    def ellipse2bbox(face_annotations):
-        major_axis_radius = int(float(face_annotations[0]))
-        minor_axis_radius = int(float(face_annotations[1]))
-        angle = int(float(face_annotations[2]))
-        center_x = int(float(face_annotations[3]))
-        center_y = int(float(face_annotations[4]))
-
-        cosa = math.cos(math.radians(-angle))
-        sina = math.sin(math.radians(-angle))
-
-        x1 = cosa * -minor_axis_radius - sina * -major_axis_radius + center_x
-        y1 = sina * -minor_axis_radius + cosa * -major_axis_radius + center_y
-        x2 = cosa * minor_axis_radius - sina * -major_axis_radius + center_x
-        y2 = sina * minor_axis_radius + cosa * -major_axis_radius + center_y
-        x3 = cosa * minor_axis_radius - sina * major_axis_radius + center_x
-        y3 = sina * minor_axis_radius + cosa * major_axis_radius + center_y
-        x4 = cosa * -minor_axis_radius - sina * major_axis_radius + center_x
-        y4 = sina * -minor_axis_radius + cosa * major_axis_radius + center_y
-
-        '''pts = cv.ellipse2Poly((center_x, center_y), (major_axis_radius, minor_axis_radius), angle, 0, 360, 10)
-        rect = cv.boundingRect(pts)'''
-        x_cords = [x1, x2, x3, x4]
-        y_cords = [y1, y2, y3, y4]
-        x_min = min(x_cords)
-        x_max = max(x_cords)
-        y_min = min(y_cords)
-        y_max = max(y_cords)
-        left = x_min
-        top = y_min
-        right = x_max
-        bottom = y_max
-        width = right - left + 1
-        height = bottom - top + 1
-        return left, top, width, height
