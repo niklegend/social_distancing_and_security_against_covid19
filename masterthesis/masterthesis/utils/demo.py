@@ -1,7 +1,6 @@
 import cv2
 
 from . import FpsCounter
-
 from .visualization_utils import draw_detections_on_image_array
 
 
@@ -19,6 +18,7 @@ def run_on_image_fn(
         boxes, classes, scores = infer_fn(img)
 
         draw_detections_on_image_array(
+            img=img,
             boxes=boxes,
             classes=classes,
             scores=scores,
@@ -30,6 +30,8 @@ def run_on_image_fn(
             line_thickness=line_thickness,
             color_mode=color_mode
         )
+
+        return img
 
     return func
 
@@ -51,9 +53,9 @@ def run_on_video(video_path, run_on_image, output_path=None):
     with FpsCounter() as counter:
         while cap.isOpened():
             # Capture frame-by-frame
-            ret, frame = cap.read()
+            grabbed, frame = cap.read()
 
-            if not ret:
+            if not grabbed:
                 break
 
             out_img = run_on_image(frame)

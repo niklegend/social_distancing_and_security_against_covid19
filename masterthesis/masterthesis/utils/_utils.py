@@ -75,11 +75,15 @@ class TimeIt:
         print(f'Execution time: {TimeIt.format_elapsed(elapsed)}')
 
     @staticmethod
-    def format_elapsed(elapsed, ndigits=6):
+    def format_elapsed(elapsed, ndigits=3):
+        def _round(x):
+            x = round(x, ndigits=ndigits)
+            return int(x) if ndigits == 0 else x
+
         fmt = []
 
-        def append_value(value, label):
-            if value > 0:
+        def append_value(value, label, forced=False):
+            if forced or value > 0:
                 fmt.append(str(value) + label)
 
         minutes, seconds = divmod(elapsed, 60)
@@ -87,7 +91,7 @@ class TimeIt:
 
         append_value(hours, 'h')
         append_value(minutes, 'm')
-        append_value(round(seconds, ndigits=ndigits), 's')
+        append_value(_round(seconds), 's', forced=True)
 
         return ''.join(fmt)
 

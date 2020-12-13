@@ -27,6 +27,6 @@ setup(
         'bbox-visualizer',
         'colormap',
         'easydev',
-        'gdown'
+        'gdown',
     ]
 )

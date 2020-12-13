@@ -1,7 +1,6 @@
 from base64 import b64decode
 
-from IPython.display import display, Javascript
-from google.colab.output import eval_js
+from IPython.display import clear_output, display, Javascript
 
 from ._utils import timestampstr, TimeIt
 
@@ -63,6 +62,7 @@ def record_video(filename=f'video_{timestampstr()}.mp4'):
     }
     """)
     display(js)
+    from google.colab.output import eval_js
     data = eval_js('recordVideo({})')
     print('Finished recording video.')
     binary = b64decode(data)
@@ -71,3 +71,31 @@ def record_video(filename=f'video_{timestampstr()}.mp4'):
             print('Saving video binary...')
             f.write(binary)
     return filename
+
+
+def select_index_prompt(choices, description=None):
+    valid_choices = range(len(choices))
+
+    def is_valid_choice(choice):
+        return choice is not None and choice.isdigit() and int(choice) in valid_choices
+
+    selected_index = None
+    while not is_valid_choice(selected_index):
+        clear_output()
+
+        # https://stackoverflow.com/questions/51642478/inconsistent-output-in-google-colab
+        output = []
+
+        if selected_index is not None:
+            output.append(f'Selected index is not valid: \'{selected_index}\'')
+
+        if description:
+            output.append(description)
+        output.append('Please, select one of the following indices:')
+        for idx, display_name in enumerate(choices):
+            output.append(f' [{idx}] - {display_name}')
+
+        output.append('Selected index: ')
+        selected_index = input('\n'.join(output))
+
+    return int(selected_index)

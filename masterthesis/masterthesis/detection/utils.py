@@ -7,19 +7,31 @@ from .boundingbox import BoxMode, BoundingBox
 Point = namedtuple('Point', ['x', 'y'])
 
 
+def polar_to_cartesian(radius, angle):
+    return Point(
+        radius * math.cos(angle),
+        radius * math.sin(angle)
+    )
+
+
 def ellipse_to_bbox(center, radius, angle, mode=BoxMode.XYXY, relative=None, absolute=None):
     # From https://stackoverflow.com/questions/87734/how-do-you-calculate-the-axis-aligned-bounding-box-of-an-ellipse#answer-14163413
 
-    funcs = [math.cos, math.sin]
+    u = polar_to_cartesian(radius.x, angle)
+    v = polar_to_cartesian(radius.y, angle + math.pi / 2)
 
-    u = Point(*(radius.x * func(angle) for func in funcs))
-    v = Point(*(radius.y * func(angle + math.pi / 2) for func in funcs))
-
-    tx = math.sqrt(u.x * u.x + v.x * v.x)
-    ty = math.sqrt(u.y * u.y + v.y * v.y)
+    translation = Point(
+        math.sqrt(u.x * u.x + v.x * v.x),
+        math.sqrt(u.y * u.y + v.y * v.y)
+    )
 
     return BoundingBox(
-        [center.x - tx, center.y - ty, center.x + tx, center.y + ty],
+        [
+            center.x - translation.x,
+            center.y - translation.y,
+            center.x + translation.x,
+            center.y + translation.y
+        ],
         relative=relative,
         absolute=absolute
     ).to(mode)
