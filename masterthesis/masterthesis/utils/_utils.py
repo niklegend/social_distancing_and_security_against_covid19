@@ -14,7 +14,8 @@ def foreach(items: Iterable[Any], f: Callable[[Any], None]) -> None:
 
 def timestampstr() -> str:
     today = datetime.today()
-    diff = today.replace(hour=0, minute=0, second=0) - today
+    midnight = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    diff = today - midnight
 
     return '_'.join([
         today.strftime("%Y%m%d"),
