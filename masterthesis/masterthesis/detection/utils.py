@@ -20,6 +20,9 @@ def ellipse_to_bbox(center, radius, angle, mode=BoxMode.XYXY, relative=None, abs
     u = polar_to_cartesian(radius.x, angle)
     v = polar_to_cartesian(radius.y, angle + math.pi / 2)
 
+    print(u)
+    print(v)
+
     translation = Point(
         math.sqrt(u.x * u.x + v.x * v.x),
         math.sqrt(u.y * u.y + v.y * v.y)

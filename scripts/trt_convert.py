@@ -2,6 +2,7 @@ import argparse
 import os
 
 import numpy as np
+from masterthesis.utils import TimeIt
 from tensorflow.python.compiler.tensorrt import trt_convert as trt
 
 true_values = [
@@ -77,9 +78,9 @@ def trt_convert(
             dtype=np.uint8
         )
 
-    converter.convert(calibration_input_fn=calibration_input_fn)
-
-    converter.save(output_saved_model_dir)
+    with TimeIt(f'Converted files have been saved to {output_saved_model_dir}'):
+        converter.convert(calibration_input_fn=calibration_input_fn)
+        converter.save(output_saved_model_dir)
 
 
 def main(args):

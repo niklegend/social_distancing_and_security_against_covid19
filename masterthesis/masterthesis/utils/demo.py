@@ -1,4 +1,5 @@
 import cv2
+import time
 
 from . import FpsCounter
 from .visualization_utils import draw_detections_on_image_array
@@ -47,10 +48,10 @@ def run_on_video(video_path, run_on_image, output_path=None):
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
         writer = cv2.VideoWriter(output_path, int(fourcc), int(fps), (int(width), int(height)))
 
-    total_fps = 0.0
-    count = 0
-
     with FpsCounter() as counter:
+        start_time = time.time()
+        total_frames = 0
+
         while cap.isOpened():
             # Capture frame-by-frame
             grabbed, frame = cap.read()
@@ -63,14 +64,13 @@ def run_on_video(video_path, run_on_image, output_path=None):
             if writer:
                 writer.write(out_img)
 
+            total_frames += 1
+
             fps = counter.update()
             if fps:
                 print(f'Inference is running at {fps:.2f} FPS')
 
-                total_fps += fps
-                count += 1
-
-    print(f'Average FPS during inference: {total_fps / count:.2f}')
+    print(f'Average FPS during inference: {total_frames / (time.time() - start_time):.2f}')
 
     # When everything done, release the capture
     cap.release()

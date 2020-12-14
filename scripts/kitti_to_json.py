@@ -41,7 +41,7 @@ def kitti_to_json_data(kitti_split_dir):
 
 
 def kitti_to_json(kitti_split_dir, output_path):
-    with TimeIt(f'Successfully created JSON annotation file: {output_path}'):
+    with TimeIt(f'JSON annotation file created at {output_path}'):
         data = kitti_to_json_data(kitti_split_dir)
 
         if data:

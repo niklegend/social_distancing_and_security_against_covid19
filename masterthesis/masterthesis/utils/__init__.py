@@ -1,5 +1,4 @@
 from ._utils import (
-    foreach,
     timestampstr,
     FpsCounter,
     TimeIt,
@@ -12,7 +11,6 @@ from ._utils import (
 )
 
 __all__ = [
-    'foreach',
     'timestampstr',
     'clip',
     'TimeIt',

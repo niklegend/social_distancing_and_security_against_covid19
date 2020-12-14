@@ -2,7 +2,7 @@ import os
 
 import gdown
 from torchvision.datasets.utils import download_url, extract_archive
-from masterthesis.utils import TimeIt
+from ..utils import TimeIt
 
 
 def download_file(url, download_type, from_path, to_path=None, remove_finished=False):

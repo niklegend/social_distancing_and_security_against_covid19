@@ -129,7 +129,7 @@ tf2_model_names = tf2_model_name_to_model_date.keys()
 def download_model(url, download_root):
     os.makedirs(os.path.dirname(download_root), exist_ok=True)
 
-    with TimeIt(f'Successfully downloaded pre-trained model: {download_root}'):
+    with TimeIt(f'Pre-trained model has been downloaded at {download_root}'):
         download_and_extract_archive(
             url,
             download_root=download_root,

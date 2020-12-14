@@ -2,7 +2,7 @@ from base64 import b64decode
 
 from IPython.display import clear_output, display, Javascript
 
-from ._utils import timestampstr, TimeIt
+from . import timestampstr, TimeIt
 
 
 def record_video(filename=f'video_{timestampstr()}.mp4'):
@@ -10,6 +10,8 @@ def record_video(filename=f'video_{timestampstr()}.mp4'):
     # This function uses the take_photo() function provided by the Colab team as a
     # starting point, along with a bunch of stuff from Stack overflow, and some sample code
     # from: https://developer.mozilla.org/enUS/docs/Web/API/MediaStream_Recording_API
+
+    from google.colab.output import eval_js
 
     js = Javascript("""
     async function recordVideo() {
@@ -59,16 +61,19 @@ def record_video(filename=f'video_{timestampstr()}.mp4'):
         binaryString += String.fromCharCode(byte);
       })
       return btoa(binaryString);
+      // let bytes = new Uint8Array(arrBuff);
+      // return btoa(bytes
+      //     .map((byte) => String.fromCharCode(byte))
+      //     .join(''));
     }
     """)
     display(js)
-    from google.colab.output import eval_js
     data = eval_js('recordVideo({})')
     print('Finished recording video.')
     binary = b64decode(data)
-    with TimeIt(f'Binary was saved under: {filename}'):
+    with TimeIt():
         with open(filename, 'wb') as f:
-            print('Saving video binary...')
+            print(f'Saving video binary at {filename}')
             f.write(binary)
     return filename
 
@@ -94,8 +99,8 @@ def select_index_prompt(choices, description=None):
         output.append('Please, select one of the following indices:')
         for idx, display_name in enumerate(choices):
             output.append(f' [{idx}] - {display_name}')
-
         output.append('Selected index: ')
+
         selected_index = input('\n'.join(output))
 
     return int(selected_index)

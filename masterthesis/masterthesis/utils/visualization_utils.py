@@ -51,7 +51,7 @@ def draw_detections_on_image_array(
         color_mode='bgr'
 ):
     if boxes.shape[0] == 0:
-        return img
+        return
 
     color_mode = color_mode.lower()
     assert all([
@@ -147,15 +147,15 @@ def draw_detections_on_image_array(
 
 
 def make_grid(img_array, num_rows=None, num_cols=None):
-    batch_size, height, width, _ = img_array.shape
+    num_images, height, width, _ = img_array.shape
 
     assert num_rows or num_cols, 'At least num_rows or num_cols must be passed, or both.'
 
     if num_rows is not None:
-        num_cols = batch_size // num_rows
+        num_cols = num_images // num_rows
     elif num_cols is not None:
-        num_rows = batch_size // num_cols
-    assert batch_size == num_rows * num_cols
+        num_rows = num_images // num_cols
+    assert num_images == num_rows * num_cols
 
     return img_array \
         .reshape(num_rows, num_cols, height, width, -1) \

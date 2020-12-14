@@ -3,13 +3,6 @@ import math
 import time
 from datetime import datetime
 from itertools import islice
-from typing import *
-
-
-def foreach(items: Iterable[Any], f: Callable[[Any], None]) -> None:
-    if items is not None:
-        for it in items:
-            f(it)
 
 
 def timestampstr() -> str:
@@ -132,10 +125,6 @@ class FpsCounter(object):
 
 
 inverse_marks = {
-    '': '',
-    '"': '"',
-    '\'': '\'',
-    '`': '`',
     '(': ')',
     '<': '>',
     '[': ']',
@@ -152,9 +141,10 @@ def create_reversed(items, func=None):
     return ret
 
 
+def _get_inverse_mark(p):
+    return inverse_marks[p] if p in inverse_marks else p
+
+
 def quote(s, prefix='\''):
-    try:
-        suffix = ''.join(create_reversed(prefix, lambda x: inverse_marks[x]))
-    except KeyError as e:
-        raise ValueError(f'Invalid quotation mark: \'{e.args[0]}\'')
+    suffix = ''.join(create_reversed(prefix, lambda x: _get_inverse_mark(x)))
     return prefix + s + suffix

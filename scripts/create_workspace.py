@@ -23,7 +23,7 @@ def create_workspace(workspace_root, scripts_path):
 
     os.makedirs(os.path.dirname(workspace_root), exist_ok=True)
 
-    with TimeIt(f'Successfully created workspace: {workspace_root}'):
+    with TimeIt(f'Wowkspace created at {workspace_root}'):
         shutil.copytree(scripts_path, workspace_root)
         for d in directories:
             os.mkdir(os.path.join(workspace_root, d))
