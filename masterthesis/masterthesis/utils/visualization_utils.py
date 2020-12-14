@@ -1,8 +1,8 @@
 import random
 
+import cv2
 import numpy as np
 from PIL import ImageColor
-from bbox_visualizer import bbox_visualizer as bbv
 from colormap import hex2rgb
 
 __colormap = None
@@ -35,6 +35,43 @@ def random_color(color_mode='hex', normalized=False):
         color = color[::-1]
 
     return color
+
+
+def draw_box_on_image_array(
+        img,
+        box,
+        color,
+        line_thickness=3
+):
+    xmin, ymin, xmax, ymax = box
+    cv2.rectangle(
+        img,
+        (xmin, ymin),
+        (xmax, ymax),
+        color,
+        line_thickness
+    )
+
+
+def draw_label_on_image_array(
+        img,
+        text,
+        origin,
+        font,
+        color,
+        bg_color=None,
+        font_scale=1,
+        thickness=2
+):
+    # From https://stackoverflow.com/questions/60674501/how-to-make-black-background-in-cv2-puttext-with-python-opencv#answer-65146731
+    xmin, ymin = origin
+    text_width, text_height = cv2.getTextSize(text, font, 1, thickness)[0]
+
+    if bg_color:
+        endpoint = xmin + text_width - 1, ymin + text_height + 1
+        cv2.rectangle(img, origin, endpoint, bg_color, -1)
+
+    cv2.putText(img, text, (xmin, ymin + text_height + font_scale - 1), font, font_scale, color, thickness)
 
 
 def draw_detections_on_image_array(
@@ -114,33 +151,28 @@ def draw_detections_on_image_array(
         box = boxes[idx]
 
         # Draw bounding box on image
-        img[:, :, :] = bbv.draw_rectangle(
-            img=img,
-            bbox=box,
-            bbox_color=color,
-            thickness=line_thickness
-        )
+        draw_box_on_image_array(img, box, color, line_thickness)
 
         # Process display name
-        label = None if agnostic_mode else display_names[class_idx]
+        text = None if agnostic_mode else display_names[class_idx]
 
         # Process score
         if scores is not None:
             score = f'{scores[idx] * 100:.2f}%'
-            if label:
-                label += ' ' + score
+            if text:
+                text += ' ' + score
             else:
-                label = score
+                text = score
 
         # Draw label on image
-        if label:
-            img[:, :, :] = bbv.add_label(
-                img=img,
-                label=label,
-                bbox=box,
-                text_bg_color=(0, 0, 0),
-                text_color=color,
-                top=False
+        if text:
+            draw_label_on_image_array(
+                img,
+                text,
+                box[:2],
+                cv2.FONT_HERSHEY_SIMPLEX,
+                color=color,
+                bg_color=(0, 0, 0)
             )
 
         drawn_boxes += 1

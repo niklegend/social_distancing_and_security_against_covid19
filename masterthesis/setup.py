@@ -24,7 +24,6 @@ setup(
         'tqdm',
         'typing_extensions',
         'opencv-python',
-        'bbox-visualizer',
         'colormap',
         'easydev',
         'gdown',
