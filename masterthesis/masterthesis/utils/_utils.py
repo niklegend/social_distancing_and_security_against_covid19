@@ -71,7 +71,8 @@ class TimeIt:
     @staticmethod
     def format_elapsed(elapsed, ndigits=3):
         def _round(x):
-            x = round(x, ndigits=ndigits)
+            if ndigits:
+                x = round(x, ndigits=ndigits)
             return int(x) if ndigits == 0 else x
 
         fmt = []

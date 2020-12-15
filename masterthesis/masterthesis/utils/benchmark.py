@@ -53,7 +53,7 @@ def run_on_image_fn(
 
 def print_statistics(times, label, total_frames=None):
     if len(times):
-        output = f'Average {label} time: {np.mean(times):.9f}'
+        output = f'Average {label} time: {TimeIt.format_elapsed(np.mean(times), ndigits=9)}'
         if total_frames:
             output += f', {label} estimated FPS: {total_frames / np.sum(times):.2f}'
 
@@ -121,6 +121,7 @@ def run_on_video(video_path, run_on_image, output_path=None):
     if writer:
         writer.release()
 
+    print()
     print(f'Ran inference on {total_frames} frames in {TimeIt.format_elapsed(elapsed_time)}.')
     print(f'Average FPS: {total_frames / elapsed_time:.2f}')
     print()

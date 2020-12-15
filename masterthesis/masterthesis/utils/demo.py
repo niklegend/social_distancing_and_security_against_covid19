@@ -78,5 +78,6 @@ def run_on_video(video_path, run_on_image, output_path=None):
     if writer:
         writer.release()
 
+    print()
     print(f'Ran inference on {total_frames} frames in {TimeIt.format_elapsed(elapsed_time)}.')
     print(f'Average FPS: {total_frames / elapsed_time:.2f}')
