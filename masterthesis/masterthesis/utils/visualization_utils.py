@@ -56,7 +56,7 @@ def draw_box_on_image_array(
 def draw_label_on_image_array(
         img,
         text,
-        origin,
+        top_left,
         font,
         color,
         bg_color=None,
@@ -64,14 +64,22 @@ def draw_label_on_image_array(
         thickness=2
 ):
     # From https://stackoverflow.com/questions/60674501/how-to-make-black-background-in-cv2-puttext-with-python-opencv#answer-65146731
-    xmin, ymin = origin
-    text_width, text_height = cv2.getTextSize(text, font, 1, thickness)[0]
+    xmin, ymin = top_left
+    text_width, text_height = cv2.getTextSize(text, font, font_scale, thickness)[0]
 
     if bg_color:
-        endpoint = xmin + text_width - 1, ymin + text_height + 1
-        cv2.rectangle(img, origin, endpoint, bg_color, -1)
+        xmax, ymax = xmin + text_width - 1, ymin + text_height + 1
+        draw_box_on_image_array(img, [xmin, ymin, xmax, ymax], bg_color, -1)
 
-    cv2.putText(img, text, (xmin, ymin + text_height + font_scale - 1), font, font_scale, color, thickness)
+    cv2.putText(
+        img,
+        text,
+        (xmin, ymin + text_height + font_scale - 1),
+        font,
+        font_scale,
+        color,
+        thickness
+    )
 
 
 def draw_detections_on_image_array(
@@ -150,7 +158,6 @@ def draw_detections_on_image_array(
         # Process bounding box
         box = boxes[idx]
 
-        # Draw bounding box on image
         draw_box_on_image_array(img, box, color, line_thickness)
 
         # Process display name
@@ -164,7 +171,6 @@ def draw_detections_on_image_array(
             else:
                 text = score
 
-        # Draw label on image
         if text:
             draw_label_on_image_array(
                 img,
