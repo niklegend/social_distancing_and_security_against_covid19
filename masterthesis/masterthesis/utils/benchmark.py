@@ -50,11 +50,11 @@ def run_on_image_fn(
     return func
 
 
-def print_inference(times, label, total_frames=None):
+def print_statistics(times, label, total_frames=None):
     if len(times):
         output = f'Average {label} time: {np.mean(times):.9f}'
         if total_frames:
-            output += f', theoretical max {label} FPS: {total_frames / np.sum(times):.2f}'
+            output += f', {label} estimated FPS: {total_frames / np.sum(times):.2f}'
 
         print(output)
 
@@ -123,12 +123,12 @@ def run_on_video(video_path, run_on_image, output_path=None):
     print(f'Average FPS during inference: {total_frames / elapsed_time:.2f}')
     print(f'Total frames analyzed: {total_frames}')
 
-    print_inference(read_times, 'read')
-    print_inference(preprocess_times, 'pre-processing')
-    print_inference(detect_times, 'detection', total_frames=total_frames)
-    print_inference(preprocess_times, 'post-processing')
-    print_inference(draw_times, 'draw')
-    print_inference(write_times, 'write')
-
-    print_inference(image_times, 'image', total_frames=total_frames)
-    print_inference(frame_times, 'frame', total_frames=total_frames)
+    print_statistics(read_times, 'read')
+    print_statistics(preprocess_times, 'pre-processing')
+    print_statistics(detect_times, 'detection', total_frames=total_frames)
+    print_statistics(preprocess_times, 'post-processing')
+    print_statistics(draw_times, 'draw')
+    print_statistics(write_times, 'write')
+    print()
+    print_statistics(image_times, 'image', total_frames=total_frames)
+    print_statistics(frame_times, 'frame', total_frames=total_frames)
