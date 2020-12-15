@@ -2,8 +2,9 @@ import time
 
 import cv2
 import numpy as np
-from masterthesis.utils import FpsCounter
-from masterthesis.utils.visualization_utils import draw_detections_on_image_array
+
+from . import FpsCounter, TimeIt
+from .visualization_utils import draw_detections_on_image_array
 
 preprocess_times = []
 detect_times = []
@@ -120,9 +121,9 @@ def run_on_video(video_path, run_on_image, output_path=None):
     if writer:
         writer.release()
 
-    print(f'Average FPS during inference: {total_frames / elapsed_time:.2f}')
-    print(f'Total frames analyzed: {total_frames}')
-
+    print(f'Ran inference on {total_frames} frames in {TimeIt.format_elapsed(elapsed_time)}.')
+    print(f'Average FPS: {total_frames / elapsed_time:.2f}')
+    print()
     print_statistics(read_times, 'read')
     print_statistics(preprocess_times, 'pre-processing')
     print_statistics(detect_times, 'detection', total_frames=total_frames)
