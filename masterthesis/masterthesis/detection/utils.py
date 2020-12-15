@@ -15,7 +15,7 @@ def polar_to_cartesian(radius, angle):
 
 
 def ellipse_to_bbox(center, radius, angle, mode=BoxMode.XYXY, relative=None, absolute=None):
-    # From https://stackoverflow.com/questions/87734/how-do-you-calculate-the-axis-aligned-bounding-box-of-an-ellipse#answer-14163413
+    # From https://stackoverflow.com/questions/87734#answer-14163413
 
     u = polar_to_cartesian(radius.x, angle)
     v = polar_to_cartesian(radius.y, angle + math.pi / 2)

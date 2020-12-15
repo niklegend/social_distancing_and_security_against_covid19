@@ -38,10 +38,12 @@ def minmax(values):
 
 
 def find_largest_divisor(x):
-    sqrtx = int(math.sqrt(x))
-    for i in range(2, sqrtx):
-        if x % i == 0:
-            return x // i
+    # https://stackoverflow.com/questions/3545259#answer-65227768
+    if x % 2 == 0:
+        return x // 2
+    for i in range(3, x // 2, 2):
+        if n % i == 0:
+            return n // i
     return 1
 
 
@@ -91,8 +93,7 @@ class TimeIt:
         return ''.join(fmt)
 
 
-# Adapted from
-# https://stackoverflow.com/questions/43761004/fps-how-to-divide-count-by-time-function-to-determine-fps
+# Adapted from https://stackoverflow.com/questions/43761004#answer-43761675
 class FpsCounter(object):
 
     def __init__(self, num_seconds=1):

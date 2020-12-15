@@ -5,6 +5,8 @@ import numpy as np
 from PIL import ImageColor
 from colormap import hex2rgb
 
+from . import find_largest_divisor
+
 __colormap = None
 
 supported_color_modes = [
@@ -63,7 +65,7 @@ def draw_label_on_image_array(
         font_scale=1,
         thickness=2
 ):
-    # From https://stackoverflow.com/questions/60674501/how-to-make-black-background-in-cv2-puttext-with-python-opencv#answer-65146731
+    # From https://stackoverflow.com/questions/60674501#answer-65146731
     xmin, ymin = top_left
     text_width, text_height = cv2.getTextSize(text, font, font_scale, thickness)[0]
 
@@ -185,9 +187,15 @@ def draw_detections_on_image_array(
 
 
 def make_grid(img_array, num_rows=None, num_cols=None):
+    # https://stackoverflow.com/questions/42040747#answer-42041135
     num_images, height, width, _ = img_array.shape
 
-    assert num_rows or num_cols, 'At least num_rows or num_cols must be passed, or both.'
+    if num_rows is None and num_cols is None:
+        n = find_largest_divisor(num_images)
+        if n >= num_images // 2:
+            num_rows = n
+        else:
+            num_cols = n
 
     if num_rows is not None:
         num_cols = num_images // num_rows

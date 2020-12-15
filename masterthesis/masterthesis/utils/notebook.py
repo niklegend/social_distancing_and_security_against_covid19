@@ -6,7 +6,7 @@ from . import timestampstr, TimeIt
 
 
 def record_video(filename=f'video_{timestampstr()}.mp4'):
-    # https://stackoverflow.com/questions/62529304/is-there-any-way-to-capture-live-video-using-webcam-in-google-colab
+    # https://stackoverflow.com/questions/62529304#answer-62804023
     # This function uses the take_photo() function provided by the Colab team as a
     # starting point, along with a bunch of stuff from Stack overflow, and some sample code
     # from: https://developer.mozilla.org/enUS/docs/Web/API/MediaStream_Recording_API
@@ -88,7 +88,7 @@ def select_index_prompt(choices, description=None):
     while not is_valid_choice(selected_index):
         clear_output()
 
-        # https://stackoverflow.com/questions/51642478/inconsistent-output-in-google-colab
+        # https://stackoverflow.com/questions/51642478#answer-51658747
         output = []
 
         if selected_index is not None:
