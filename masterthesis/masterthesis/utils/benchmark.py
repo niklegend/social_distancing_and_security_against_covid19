@@ -3,52 +3,17 @@ import time
 import cv2
 import numpy as np
 
-from . import FpsCounter, TimeIt
-from .visualization_utils import draw_detections_on_image_array
+from . import FpsCounter, TimeIt, time_it
 
 preprocess_times = []
 detect_times = []
 postprocess_times = []
+draw_times = []
 
 read_times = []
-draw_times = []
 write_times = []
 image_times = []
 frame_times = []
-
-
-def run_on_image_fn(
-        infer_fn,
-        display_names=None,
-        colors=None,
-        use_normalized_coordinates=False,
-        max_boxes_to_draw=None,
-        min_score_threshold=None,
-        line_thickness=3,
-        color_mode='bgr'
-):
-    def func(img):
-        boxes, classes, scores = infer_fn(img)
-
-        st = time.time()
-        draw_detections_on_image_array(
-            img=img,
-            boxes=boxes,
-            classes=classes,
-            scores=scores,
-            display_names=display_names,
-            colors=colors,
-            use_normalized_coordinates=use_normalized_coordinates,
-            max_boxes_to_draw=max_boxes_to_draw,
-            min_score_threshold=min_score_threshold,
-            line_thickness=line_thickness,
-            color_mode=color_mode
-        )
-        draw_times.append(time.time() - st)
-
-        return img
-
-    return func
 
 
 def print_statistics(times, label, total_frames=None):
@@ -61,14 +26,14 @@ def print_statistics(times, label, total_frames=None):
 
 
 def run_on_video(video_path, run_on_image, output_path=None):
-    global detect_times, preprocess_times, postprocess_times
+    global detect_times, preprocess_times, postprocess_times, draw_times
     preprocess_times = []
     detect_times = []
     postprocess_times = []
-
-    global read_times, draw_times, write_times, image_times, frame_times
-    read_times = []
     draw_times = []
+
+    global read_times, write_times, image_times, frame_times
+    read_times = []
     write_times = []
     image_times = []
     frame_times = []
@@ -90,21 +55,17 @@ def run_on_video(video_path, run_on_image, output_path=None):
             frame_st = time.time()
 
             # Capture frame-by-frame
-            st = time.time()
-            grabbed, frame = cap.read()
-            read_times.append(time.time() - st)
+            elapsed_time, (grabbed, frame) = time_it(cap.read)
+            read_times.append(elapsed_time)
 
             if not grabbed:
                 break
 
-            st = time.time()
-            out_img = run_on_image(frame)
-            image_times.append(time.time() - st)
+            elapsed_time, out_img = time_it(run_on_image, frame)
+            image_times.append(elapsed_time)
 
             if writer:
-                st = time.time()
-                writer.write(out_img)
-                write_times.append(time.time() - st)
+                write_times.append(time_it(writer.write, out_img))
 
             total_frames += 1
 

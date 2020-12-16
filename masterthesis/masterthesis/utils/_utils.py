@@ -93,6 +93,14 @@ class TimeIt:
         return ''.join(fmt)
 
 
+def time_it(func, *args, ret=True, **kwargs):
+    start_time = time.time()
+    func_ret = func(*args, **kwargs)
+    elapsed_time = time.time() - start_time
+
+    return (elapsed_time, func_ret) if ret and func_ret is not None else elapsed_time
+
+
 # Adapted from https://stackoverflow.com/questions/43761004#answer-43761675
 class FpsCounter(object):
 

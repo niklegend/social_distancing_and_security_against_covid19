@@ -186,22 +186,30 @@ def draw_detections_on_image_array(
         drawn_boxes += 1
 
 
-def make_grid(img_array, num_rows=None, num_cols=None):
+def make_grid(img_array, num_rows=None, num_cols=None, priority='columns'):
     # https://stackoverflow.com/questions/42040747#answer-42041135
+    assert priority in ['rows', 'columns']
     num_images, height, width, _ = img_array.shape
 
     if num_rows is None and num_cols is None:
         n = find_largest_divisor(num_images)
         if n >= num_images // 2:
-            num_rows = n
-        else:
             num_cols = n
+        else:
+            num_rows = n
 
     if num_rows is not None:
         num_cols = num_images // num_rows
     elif num_cols is not None:
         num_rows = num_images // num_cols
+
     assert num_images == num_rows * num_cols
+
+    if priority == 'columns':
+        if num_rows > num_cols:
+            num_rows, num_cols = num_cols, num_rows
+    elif num_cols > num_rows:
+        num_cols, num_rows = num_rows, num_cols
 
     return img_array \
         .reshape(num_rows, num_cols, height, width, -1) \

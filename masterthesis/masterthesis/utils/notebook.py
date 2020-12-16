@@ -86,12 +86,11 @@ def select_index_prompt(choices, description=None):
 
     selected_index = None
     while not is_valid_choice(selected_index):
-        clear_output()
-
         # https://stackoverflow.com/questions/51642478#answer-51658747
         output = []
 
         if selected_index is not None:
+            clear_output()
             output.append(f'Selected index is not valid: \'{selected_index}\'')
 
         if description:
@@ -99,8 +98,8 @@ def select_index_prompt(choices, description=None):
         output.append('Please, select one of the following indices:')
         for idx, display_name in enumerate(choices):
             output.append(f' [{idx}] - {display_name}')
-        output.append('Selected index: ')
 
+        output.append('Selected index: ')
         selected_index = input('\n'.join(output))
 
     return int(selected_index)

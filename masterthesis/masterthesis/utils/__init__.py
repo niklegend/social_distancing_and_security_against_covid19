@@ -2,6 +2,7 @@ from ._utils import (
     timestampstr,
     FpsCounter,
     TimeIt,
+    time_it,
     clip,
     create_reversed,
     quote,
@@ -13,6 +14,7 @@ from ._utils import (
 __all__ = [
     'timestampstr',
     'clip',
+    'TimeIt',
     'TimeIt',
     'FpsCounter',
     'create_reversed',

@@ -37,10 +37,13 @@ precision_mode_to_dtpye = {
 }
 
 
-def random_calibration_input_fn(calibration_input_shape, num_calibration_steps, dtype):
+def input_fn(shape, dtype, num_calibration_steps=1, gen_fn=None):
+    if gen_fn is None:
+        gen_fn = lambda x: np.random.randint(0, 256, x)
+
     def func():
         for _ in range(num_calibration_steps):
-            inp = np.random.randint(0, 256, size=calibration_input_shape).astype(dtype=dtype)
+            inp = gen_fn(shape).astype(dtype=dtype)
             yield (inp,)
 
     return func
@@ -50,19 +53,21 @@ def trt_convert(
         input_saved_model_dir,
         output_saved_model_dir,
         conversion_params=None,
-        calibration_input_shape=None,
-        num_calibration_steps=1
+        input_shape=None,
+        num_calibration_steps=1,
+        input_type=None
 ):
     if os.path.exists(output_saved_model_dir):
         if not os.path.isdir(output_saved_model_dir):
             raise RuntimeError(f'\'{output_saved_model_dir}\' is not a directory.')
         if os.listdir(output_saved_model_dir):
             raise RuntimeError(f'\'{output_saved_model_dir}\' directory is not empty.')
-    else:
-        os.makedirs(output_saved_model_dir)
 
     if not conversion_params:
         conversion_params = trt.DEFAULT_TRT_CONVERSION_PARAMS
+
+    if input_shape:
+        input_shape = 1, *input_shape
 
     converter = trt.TrtGraphConverterV2(
         input_saved_model_dir=input_saved_model_dir,
@@ -72,14 +77,25 @@ def trt_convert(
     calibration_input_fn = None
 
     if conversion_params.precision_mode == trt.TrtPrecisionMode.INT8:
-        calibration_input_fn = random_calibration_input_fn(
-            tuple([1] + calibration_input_shape),
-            num_calibration_steps,
-            dtype=np.uint8
+        calibration_input_fn = input_fn(
+            input_shape,
+            np.uint8,
+            num_calibration_steps
         )
 
     with TimeIt(f'Converted files have been saved to {output_saved_model_dir}'):
         converter.convert(calibration_input_fn=calibration_input_fn)
+
+        if input_shape:
+            converter.build(
+                input_fn=input_fn(
+                    input_shape,
+                    precision_mode_to_dtpye[input_type],
+                    gen_fn=np.zeros
+                )
+            )
+
+        os.makedirs(output_saved_model_dir, exist_ok=True)
         converter.save(output_saved_model_dir)
 
 
@@ -99,8 +115,9 @@ def main(args):
         input_saved_model_dir=args.input_saved_model_dir,
         output_saved_model_dir=args.output_saved_model_dir,
         conversion_params=conversion_params,
-        calibration_input_shape=args.calibration_input_shape,
-        num_calibration_steps=args.num_calibration_steps
+        input_shape=args.input_shape,
+        num_calibration_steps=args.num_calibration_steps,
+        input_type=args.input_type
     )
 
 
@@ -212,15 +229,6 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '--calibration-input-shape',
-        type=int,
-        nargs=3,
-        help='shape of the random input data yielded by the generator function, which will be used '
-             'to execute the converted signature to generate TRT engines. Input shape is expected '
-             'as (Height, Width, Channels).'
-    )
-
-    parser.add_argument(
         '--num_calibration_steps',
         type=int,
         default=1,
@@ -228,13 +236,29 @@ if __name__ == '__main__':
              'is not needed.'
     )
 
+    parser.add_argument(
+        '--input-shape',
+        type=int,
+        nargs=3,
+        help='shape of the input data yielded by the generator function, which will be used '
+             'to execute the converted signature to generate TRT engines. Input shape is expected '
+             'as (Height, Width, Channels).'
+    )
+
+    parser.add_argument(
+        '--input-type',
+        type=str,
+        choices=trt.TrtPrecisionMode.supported_precision_modes(),
+        help='type of the input data yielded by the generator function, which will be used to '
+             'execute the converted signature to generate TRT engines.'
+    )
+
     args = parser.parse_args()
 
-    if args.precision_mode == trt.TrtPrecisionMode.INT8:
-        if args.calibration_input_shape is None:
-            parser.error('INT8 precision mode requires --calibration-input-shape')
-    elif args.calibration_input_shape is not None:
-        parser.error('Should not specify --calibration-input-shape when INT8 calibration is not '
-                     'needed')
+    if args.precision_mode == trt.TrtPrecisionMode.INT8 and args.input_shape is None:
+        parser.error('INT8 precision mode requires --input-shape')
+
+    if args.input_shape is not None and args.input_type is None:
+        parser.error('Should specify --input-type when --input-shape is provided')
 
     main(args)
